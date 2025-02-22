@@ -140,7 +140,50 @@ std::string encode_rle(const std::string& text){
     return encode  ;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+#include<iostream>
+#include<vector>
+#include<string>
+#include<sstream>
+#include<map>
+#include<algorithm>
+#include<cctype>
 
+
+using namespace std  ; 
+void top_frequent_words(const std::string&text , int n);
+int main(){
+    string phrase = "C++ est puissant, C++ est rapide, C++ est utilisé" ;
+    cout<<"Entree : "+phrase<<endl ;
+    cout<<"Top 3 mots les plus fréquent : "<<endl;
+    top_frequent_words(phrase , 3) ;
+    return 0 ;
+}
+
+void top_frequent_words(const std::string&text , int n){
+    map <string , int> freq ;
+    istringstream iss(text) ; //utiliser std!::istringstream pour recuperer les mots 
+    string word ;
+    while(iss>>word){
+        word.erase( remove_if(word.begin() , word.end() , [](char c){return !isalnum(c) && c != '+' && c!='-';}) , word.end());  //suppression de ponctuation non necessaire 
+        if(!word.empty()) {
+            freq[word]++;
+        }
+    }
+   //Utilisation du vecteur 
+    vector<pair<string , int>> sorted_words(freq.begin() , freq.end()) ;
+    
+    //Methode pour classer suivant les valeurs des val 
+    sort(sorted_words.begin() , sorted_words.end() , [] (const auto& a , const auto& b )
+    {return a.second >b.second ;
+    });   
+
+    //Afficher le resultat en se limitant au trois premier 
+    for (int i = 0 ; i<n && i<sorted_words.size() ; i++){
+        cout<<sorted_words.at(i).first<< "-->" << sorted_words.at(i).second <<endl ;
+    }
+
+}
 
 
 
