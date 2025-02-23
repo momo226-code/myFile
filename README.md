@@ -186,6 +186,87 @@ void top_frequent_words(const std::string&text , int n){
 }
 
 
+/////////////////////////////////////////////////////////////////////////////////
+#include<iostream>
+#include<sstream>
+#include<string>
+#include<map>
+
+using namespace std ;
+
+void sort_by_length(const string& text) ;
+
+int main(){
+    string phrase = "Le langage C++ est rapide et efficace" ;
+    sort_by_length(phrase) ; 
+
+    return 0 ;
+
+}
+void sort_by_length(const string& text) {   
+    cout<<"Entrée : "<<endl ;
+    
+    cout<<text<<endl ;
+    
+    multimap<int,string> word_map ;
+    
+    istringstream iss(text) ;   //methode pour recuperer string par string
+    
+    string word  ;
+    
+    while(iss>>word){
+        word_map.insert({word.size() , word}) ; 
+    } ;
+
+    //Affichage du resultat sachant de std::multimap est ordonnée par ordre croissant des clés ; 
+    cout<<"Trie par longueur : " <<endl;
+    
+    for(const auto& pair :word_map){
+        cout<<pair.second<<" " ;
+    }
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+#include<iostream>
+#include<regex>
+#include<string>
+
+using namespace std ;
+
+
+bool contains_email(const string& text) ;
+
+int main(){
+
+    string text = "Mon email est user@example.com" ;
+
+    if (contains_email(text)){
+        cout<<"Found"<<endl ;
+    } else {
+        cout<<"NONE"<<endl ;
+    }
+
+    return  0 ;  
+}
+
+
+bool contains_email(const string& text){
+    regex pattern(R"((\w+@\w+\.\w+))") ;
+
+    smatch match ;
+
+   if( regex_search(text , match , pattern)){
+        cout<<match[0] <<endl  ; 
+        return true ;
+   } else {
+    return false ;
+   }
+
+
+}
+
 
 
 
